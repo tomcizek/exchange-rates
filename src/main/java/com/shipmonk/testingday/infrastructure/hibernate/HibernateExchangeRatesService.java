@@ -19,7 +19,7 @@ public class HibernateExchangeRatesService implements ExchangeRatesProvider {
 
     private final DailyExchangeRateRepository exchangeRateRepository;
 
-    @Value("${fixer.api.currency.base.default}")
+    @Value("${exchange.rates.currency.base.default}")
     private String defaultBaseCurrency;
 
     @Autowired
@@ -51,6 +51,7 @@ public class HibernateExchangeRatesService implements ExchangeRatesProvider {
             return new ExchangeRates(true, this.defaultBaseCurrency, day, rates);
 
         } catch (Exception e) {
+            // TODO log exception
             throw ExchangeRatesProviderException.becauseFetchingFailed(e);
         }
     }

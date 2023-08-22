@@ -29,6 +29,13 @@ public class ExchangeRatesProviderException extends Exception {
         );
     }
 
+    public static ExchangeRatesProviderException becauseThereWasErrorInFetchedData(Exception e) {
+        return new ExchangeRatesProviderException(
+            "There was error in fetched data.",
+            e
+        );
+    }
+
     public static ExchangeRatesProviderException becauseParsingResultJSONFailed(Exception e) {
         return new ExchangeRatesProviderException(
             "Parsing JSON result of exchange rates failed.",

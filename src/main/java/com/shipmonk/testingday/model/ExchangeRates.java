@@ -19,7 +19,7 @@ public class ExchangeRates {
         this.success = success;
         this.base = base;
         this.date = date;
-        this.rates = rates;
+        this.rates = Map.copyOf(rates);
     }
 
     public boolean isSuccess() {

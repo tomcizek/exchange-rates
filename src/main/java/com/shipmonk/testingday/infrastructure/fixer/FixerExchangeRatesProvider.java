@@ -12,9 +12,11 @@ import java.util.Map;
 import javax.money.CurrencyUnit;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
+@Primary
 public class FixerExchangeRatesProvider implements ExchangeRatesProvider {
 
     private final FixerExchangeRatesFetcher fixerExchangeRatesFetcher;
@@ -25,7 +27,7 @@ public class FixerExchangeRatesProvider implements ExchangeRatesProvider {
     @Value("${fixer.api.base.url}")
     private String baseURL;
 
-    @Value("${fixer.api.currency.base.default}")
+    @Value("${exchange.rates.currency.base.default}")
     private String defaultBaseCurrency;
 
     public FixerExchangeRatesProvider(FixerExchangeRatesFetcher fixerExchangeRatesFetcher) {
@@ -49,6 +51,8 @@ public class FixerExchangeRatesProvider implements ExchangeRatesProvider {
             throw ExchangeRatesProviderException.becauseFetchingFailed(e);
         }
 
+        ensureJsonResponseIsSuccesful(jsonResponse);
+
         try {
             return parseJson(jsonResponse);
         } catch (Exception e) {
@@ -61,10 +65,23 @@ public class FixerExchangeRatesProvider implements ExchangeRatesProvider {
 
         return this.baseURL + date +
             "?access_key=" + this.apiKey +
-//            "&base=" + baseCurrency +
+//            "&base=" + this.defaultBaseCurrency +
             "&symbols=" + String.join(",", symbols.stream()
             .map(CurrencyUnit::getCurrencyCode)
             .toList()
+        );
+    }
+
+    private static void ensureJsonResponseIsSuccesful(JSONObject jsonResponse)
+        throws ExchangeRatesProviderException {
+        if (jsonResponse.getBoolean("success")) {
+            return;
+        }
+
+        throw ExchangeRatesProviderException.becauseThereWasErrorInFetchedData(
+            new RuntimeException(
+                String.format("Full response: %n%s", jsonResponse.toString(2))
+            )
         );
     }
 
