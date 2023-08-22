@@ -7,6 +7,9 @@ import javax.money.CurrencyUnit;
 
 public interface ExchangeRatesProvider {
 
-    ExchangeRates getRates(LocalDate day, List<CurrencyUnit> symbols) throws ExchangeRatesProviderException;
+    ExchangeRates getRates(
+        LocalDate day,
+        List<CurrencyUnit> symbols
+    ) throws ExchangeRatesProviderException;
 
 }
