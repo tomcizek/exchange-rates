@@ -12,11 +12,9 @@ import java.util.Map;
 import javax.money.CurrencyUnit;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Primary
 public class FixerExchangeRatesProvider implements ExchangeRatesProvider {
 
     private final FixerExchangeRatesFetcher fixerExchangeRatesFetcher;

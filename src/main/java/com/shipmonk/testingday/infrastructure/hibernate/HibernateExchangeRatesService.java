@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.money.CurrencyUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,7 +41,11 @@ public class HibernateExchangeRatesService implements ExchangeRatesProvider {
                 .map(CurrencyUnit::getCurrencyCode)
                 .toList();
             List<DailyExchangeRate> ratesFromDb =
-                exchangeRateRepository.findByIdDateAndIdCurrencyCodeIn(day, currencyCodes);
+                exchangeRateRepository.findByIdDateAndIdCurrencyCodeIn(
+                    day,
+                    currencyCodes,
+                    Sort.by("id.currencyCode").ascending()
+                );
 
             Map<String, BigDecimal> rates = ratesFromDb.stream()
                 .collect(Collectors.toMap(
