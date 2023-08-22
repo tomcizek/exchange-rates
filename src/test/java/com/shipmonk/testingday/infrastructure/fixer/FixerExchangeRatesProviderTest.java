@@ -1,11 +1,9 @@
-package com.shipmonk.testingday.infrastructure;
+package com.shipmonk.testingday.infrastructure.fixer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.shipmonk.testingday.ApprovalTest;
-import com.shipmonk.testingday.infrastructure.fixer.FixerExchangeRatesFetcher;
-import com.shipmonk.testingday.infrastructure.fixer.FixerExchangeRatesProvider;
 import com.shipmonk.testingday.model.exceptions.ExchangeRatesProviderException;
 import java.io.IOException;
 import java.time.LocalDate;

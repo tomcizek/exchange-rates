@@ -3,13 +3,13 @@ package com.shipmonk.testingday.model.exceptions;
 public class ExchangeRatesProviderException extends Exception {
 
 
-    public ExchangeRatesProviderException(
+    protected ExchangeRatesProviderException(
         String message
     ) {
         super(message);
     }
 
-    public ExchangeRatesProviderException(
+    protected ExchangeRatesProviderException(
         String message,
         Throwable cause
     ) {
